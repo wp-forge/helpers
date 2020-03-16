@@ -1,10 +1,26 @@
 <?php
 
-namespace WP_Forge\Utilities;
+namespace WP_Forge\Helpers;
 
 use ArrayAccess;
 
+/**
+ * Class Arr
+ *
+ * @package WP_Forge\Helpers
+ */
 class Arr {
+
+	/**
+	 * Determine whether the given value is accessible.
+	 *
+	 * @param mixed $value
+	 *
+	 * @return bool
+	 */
+	public static function accessible( $value ) {
+		return is_array( $value ) || $value instanceof ArrayAccess;
+	}
 
 	/**
 	 * Add an element to an array using "dot" notation if it doesn't exist.
@@ -58,17 +74,6 @@ class Arr {
 		}
 
 		return $array;
-	}
-
-	/**
-	 * Determine whether the given value is accessible.
-	 *
-	 * @param mixed $value
-	 *
-	 * @return bool
-	 */
-	public static function accessible( $value ) {
-		return is_array( $value ) || $value instanceof ArrayAccess;
 	}
 
 	/**
@@ -325,22 +330,6 @@ class Arr {
 	}
 
 	/**
-	 * Explode the "value" and "key" arguments passed to "pluck".
-	 *
-	 * @param string|array      $value
-	 * @param string|array|null $key
-	 *
-	 * @return array
-	 */
-	protected static function explodePluckParameters( $value, $key ) {
-		$value = is_string( $value ) ? explode( '.', $value ) : $value;
-
-		$key = is_null( $key ) || is_array( $key ) ? $key : explode( '.', $key );
-
-		return [ $value, $key ];
-	}
-
-	/**
 	 * Convert the array into a query string.
 	 *
 	 * @param array $array
@@ -361,6 +350,37 @@ class Arr {
 	 */
 	public static function where( $array, callable $callback ) {
 		return array_filter( $array, $callback, ARRAY_FILTER_USE_BOTH );
+	}
+
+	/**
+	 * If the given value is not an array and not null, wrap it in one.
+	 *
+	 * @param mixed $value
+	 *
+	 * @return array
+	 */
+	public static function wrap( $value ) {
+		if ( is_null( $value ) ) {
+			return [];
+		}
+
+		return is_array( $value ) ? $value : [ $value ];
+	}
+
+	/**
+	 * Explode the "value" and "key" arguments passed to "pluck".
+	 *
+	 * @param string|array      $value
+	 * @param string|array|null $key
+	 *
+	 * @return array
+	 */
+	protected static function explodePluckParameters( $value, $key ) {
+		$value = is_string( $value ) ? explode( '.', $value ) : $value;
+
+		$key = is_null( $key ) || is_array( $key ) ? $key : explode( '.', $key );
+
+		return [ $value, $key ];
 	}
 
 

@@ -10,8 +10,11 @@
     ],
     "autoload": {
         "psr-4": {
-            "WP_Forge\\Helpers\\": ""
+            "WP_Forge\\Helpers\\": "includes"
         }
     },
-    "require": {}
+    "require": {
+        "ext-mbstring": "*",
+        "doctrine/inflector": "^1.3"
+    }
 }
