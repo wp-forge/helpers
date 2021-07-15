@@ -13,7 +13,7 @@
       "WP_Forge\\Helpers\\": "includes"
     },
     "files": [
-      "functions.php"
+      "includes/functions.php"
     ]
   },
   "require": {
